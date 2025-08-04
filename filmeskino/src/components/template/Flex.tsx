@@ -1,3 +1,5 @@
+import mergeClasses from "@/utils/mergeClasses"
+
 interface FlexProps{
     children: React.ReactNode,
     className?: string,
@@ -7,7 +9,7 @@ interface FlexProps{
 
 export default function Flex({children, className, col, row}:FlexProps){
     return(
-        <div className="flex bg-red-300">
+        <div className={mergeClasses("flex justify-center items-center gap-2", {'flex-col':col, 'flex-row':row}, className)}>
             {children}
         </div>
     )
