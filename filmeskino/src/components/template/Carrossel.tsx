@@ -11,9 +11,9 @@ interface CarrosselProps{
     slideAutomatico: boolean
 }
 
-function BotaoLateral(props:{esquerda?:boolean, direita?:boolean, children:React.ReactNode, onClick: ()=> void}){
+function BotaoLateral(props:{esquerda?:boolean, direita?:boolean, children:React.ReactNode, onClick: ()=> void, onMouseEnter: ()=>void, onMouseLeave: ()=>void}){
     return (
-        <button type="button" onClick={props.onClick} className={mergeClasses(`group absolute top-0 h-full cursor-pointer flex items-center justify-center px-4 focus:outline-none`, {"left-0":props.esquerda, "right-0":props.direita})}>
+        <button type="button" onClick={props.onClick} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave} className={mergeClasses(`group absolute top-0 h-full cursor-pointer flex items-center justify-center px-4 focus:outline-none`, {"left-0":props.esquerda, "right-0":props.direita})}>
                 <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-700/30 group-focus:outline-none group-focus:ring-4 group-focus:ring-white group-hover:bg-gray-800/60`}>
                     {props.children}
                 </span>
@@ -23,10 +23,37 @@ function BotaoLateral(props:{esquerda?:boolean, direita?:boolean, children:React
 
 export default function Carrossel({children,slideAutomatico}:CarrosselProps){
     const carrosselRef = useRef<HTMLDivElement | null>(null)
-    const intervaloRef = useRef()
-    const animacaoRef = useRef()
+    const intervaloRef = useRef<NodeJS.Timeout>()
+    const animacaoRef = useRef<HTMLDivElement | null>(null)
     const [indiceAtual, setIndiceAtual] = useState(0)
     const NUMERO_DE_ITENS = children.length
+    const TEMPO = 5000
+
+    function iniciarSlide(){
+        if(!slideAutomatico) return;
+        if(animacaoRef.current){
+            animacaoRef.current.style.display="block"
+        }
+        intervaloRef.current = setInterval(()=>{
+            if(animacaoRef.current){
+                animacaoRef.current.style.display="block"
+            }
+            proximoSlide()
+        }, TEMPO)
+    }
+
+    function pararSlide(){
+        if(animacaoRef.current){
+            animacaoRef.current.style.display="none"
+        }
+        
+        return clearInterval(intervaloRef.current)
+    }
+
+    useEffect(()=>{
+        iniciarSlide()
+        return ()=> pararSlide()
+    },[NUMERO_DE_ITENS])
 
     useEffect(()=>{
         if(!carrosselRef.current){
@@ -56,10 +83,10 @@ export default function Carrossel({children,slideAutomatico}:CarrosselProps){
     }
 
     return(
-        <Wrap>
-            <Container>
+        <Wrap className="relative">
+            <Container className="relative">
                 <Wrap>
-                    <div className="relative rounded-lg mb-5" ref={carrosselRef}>
+                    <div className="relative rounded-lg mb-5" ref={carrosselRef} onMouseEnter={pararSlide} onMouseLeave={iniciarSlide}>
                         {Children.map(children, (filho:JSX.Element, i)=>{
                             const propsFilho = filho.props
                             return cloneElement(filho, {
@@ -76,12 +103,19 @@ export default function Carrossel({children,slideAutomatico}:CarrosselProps){
                         })}
                     </Flex>
                 </Wrap>
+                <Wrap className="absolute h-1 -bottom-0">
+                        <div ref={animacaoRef} onAnimationEnd={()=>{
+                            animacaoRef.current!.style.display="none"
+                        }} className="rounded-lg h-full animate-[timer_4.8s_ease-in-out] bg-gray-800">
+
+                        </div>
+                </Wrap>
             </Container>
-            <BotaoLateral onClick={slideAnterior} esquerda>
+            <BotaoLateral onClick={slideAnterior} onMouseEnter={pararSlide} onMouseLeave={iniciarSlide} esquerda>
                 <CaretLeftIcon size={20} />
                 <span className="hidden">Anterior</span>
             </BotaoLateral>
-            <BotaoLateral onClick={proximoSlide} direita>
+            <BotaoLateral onClick={proximoSlide} onMouseEnter={pararSlide} onMouseLeave={iniciarSlide} direita>
                 <CaretRightIcon size={20} />
                 <span className="hidden">Próximo</span>
             </BotaoLateral>
