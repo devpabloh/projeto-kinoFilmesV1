@@ -95,7 +95,7 @@ export default function Carrossel({children,slideAutomatico}:CarrosselProps){
                             })
                         })}
                     </div>
-                    <Flex className="absolute bottom-5 left-1/2 z-30 translate-x-1/2 gap-2">
+                    <Flex className="bottom-5 z-30 gap-2">
                         {Array.from({length:NUMERO_DE_ITENS}).map((_,i)=>{
                             return (
                                 <button key={i} aria-label="NavegacaoCarrossel" className={mergeClasses("h-3 w-3 rounded-full bg-gray-800", {"bg-gray-500": i === indiceAtual})} onClick={()=>setIndiceAtual(i)} type="button"></button>

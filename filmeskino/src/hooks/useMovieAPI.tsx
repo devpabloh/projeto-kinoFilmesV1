@@ -37,7 +37,7 @@ export default function useMovieAPI(){
         const fatia = json.results.slice(0,12)
         return fatia.map((item:any)=>{
             return {
-                id: item.filme,
+                id: item.id,
                 titulo: item.title,
                 descricao: item.overview,
                 dataDeLancamento: new Date(item.release_date),
@@ -45,7 +45,6 @@ export default function useMovieAPI(){
                 linkImagemFundo: formatarImagemUrl(item.backdrop_path),
                 linkImagemPoster: formatarImagemUrl(item.poster_path)
             }
-
         })
     }
 

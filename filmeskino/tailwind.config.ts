@@ -8,6 +8,9 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   safelist: [
+    'text-center',
+    'text-left',
+    'text-right',
     {pattern: /grid-cols-/},
     {pattern: /grid-rows-/}
   ],

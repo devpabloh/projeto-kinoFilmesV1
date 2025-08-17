@@ -8,6 +8,16 @@ const nextConfig = {
                 permanent: true
             }
         ]
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname:"image.tmdb.org",
+                port:"",
+                pathname: "/t/p/**"
+            }
+        ]
     }
 };
 
