@@ -7,3 +7,8 @@ interface Filme{
     nota: number;
     dataLancamento: Date;
 }
+
+type Genero = {
+    id: string,
+    nome: string
+}
