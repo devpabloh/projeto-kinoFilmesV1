@@ -48,5 +48,19 @@ export default function useMovieAPI(){
         })
     }
 
-    return{ getUltimosFilmes}
+    async function getGenerosDoFilme(filmesID:string){
+        const {json} = await get(`/movie/${filmesID}`)
+
+        return json.genres.map((genero: any)=>{
+            return {
+                id: genero.id,
+                nome: genero.name,
+            }
+        })
+    }
+
+    return{ 
+        getUltimosFilmes,
+        getGenerosDoFilme
+    }
 }
