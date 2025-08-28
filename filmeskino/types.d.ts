@@ -5,10 +5,24 @@ interface Filme{
     linkImagemFundo: string;
     linkImagemPoster: string;
     nota: number;
-    dataLancamento: Date;
+    dataDeLancamento: Date;
+}
+
+interface FilmeDetalhado extends Filme{
+    tituloOriginal: string;
+    generos: Genero[];
+    atores: Ator[];
+    duracao:  number;
+}
+
+type Ator = {
+    id: string;
+    nome: string;
+    imagemPerfil: string;
+    personagem: string;
 }
 
 type Genero = {
-    id: string,
-    nome: string
+    id: string;
+    nome: string;
 }
