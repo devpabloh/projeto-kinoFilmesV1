@@ -26,3 +26,13 @@ type Genero = {
     id: string;
     nome: string;
 }
+
+type AtorDetalhado = {
+    id: string;
+    nome: string;
+    imagemPerfil: string;
+    biografia: string;
+    dataNascimento: Date;
+    genero: string;
+    localNascimento: string;
+}
