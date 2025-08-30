@@ -77,6 +77,22 @@ export default function useMovieAPI(){
             }
     }
 
+    async function getFilmesSimilares(idFilme: string): Promise<Filme[]>{
+        const {json} = await get(`/movie/${idFilme}/similar`)
+        const selecionados = json.results.slice(0,9)
+        return selecionados.map((item: any)=>{
+            return {
+                id: item.id, 
+                titulo: item.title,
+                descricao: item.overview,
+                dataDeLancamento: new Date(item.release_date),
+                nota: item.vote_average,
+                linkImagemFundo: formatarImagemUrl(item.backdrop_path),
+                linkImagemPoster: formatarImagemUrl(item.poster_path)
+            }
+        })
+    }
+
     async function getGenerosDoFilme(filmesID:string){
         const {json} = await get(`/movie/${filmesID}`)
 
@@ -88,9 +104,24 @@ export default function useMovieAPI(){
         })
     }
 
+    async function getAtorDetalhado(idAtor: string){
+        const {json} = await get(`/person/${idAtor}`)
+        return {
+            id: json.id,
+            nome: json.name,
+            biografia: json.biography,
+            imagemPerfil: formatarImagemUrl(json.profile_path),
+            dataNascimento: new Date(json.birthday),
+            localNascimento: json.place_of_birth,
+            genero: json.gender === 1 ? "Feminino" : "Masculino",
+        }
+    }
+
     return{ 
         getUltimosFilmes,
         getGenerosDoFilme,
-        getFilmeDetalhado
+        getFilmeDetalhado,
+        getFilmesSimilares,
+        getAtorDetalhado    
     }
 }
