@@ -117,11 +117,49 @@ export default function useMovieAPI(){
         }
     }
 
+    async function getImagensAtor(idAtor: string){
+        try {
+            const {json, status} = await get(`/person/${idAtor}/images`);
+
+            if(status !== 200){
+                console.error(`Erro na API:`, json);
+                return [];
+            }
+
+            if(!json.profiles || !Array.isArray(json.profiles)){
+                console.warn(`Profiles não encontrado ou não é um array:`, json)
+            }
+
+            return json.profiles.map((img: any)=>formatarImagemUrl(img.file_path))
+        } catch (error) {
+            console.error(`Erro ao buscar imagens do ator:`, error)
+            return [];
+        }
+    }
+
+    async function getFilmesDoAtor(idAtor: string): Promise<Filme[]>{
+        const {json} = await get(`/person/${idAtor}/movie_credits`)
+        const selecionados = json.cast.slice(0,9)
+        return selecionados.map((item: any)=>{
+            return {
+                id: item.id, 
+                titulo: item.title,
+                descricao: item.overview,
+                dataDeLancamento: new Date(item.release_date),
+                nota: item.vote_average,
+                linkImagemFundo: formatarImagemUrl(item.backdrop_path),
+                linkImagemPoster: formatarImagemUrl(item.poster_path)
+            }
+        })
+    }
+
     return{ 
         getUltimosFilmes,
         getGenerosDoFilme,
         getFilmeDetalhado,
         getFilmesSimilares,
-        getAtorDetalhado    
+        getAtorDetalhado,
+        getImagensAtor,
+        getFilmesDoAtor    
     }
 }
