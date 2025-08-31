@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from "react"
 import Flex from "../template/Flex"
 import useMovieAPI from "@/hooks/useMovieAPI"
