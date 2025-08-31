@@ -18,9 +18,6 @@ const nextConfig = {
                 pathname: "/t/p/**"
             }
         ]
-    },
-    experimental:{
-        suppressHydrationWarning: true
     }
 };
 

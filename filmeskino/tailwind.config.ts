@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import Colors from "tailwindcss/Colors"
 
 const config: Config = {
   content: [
@@ -31,9 +30,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors:{
-        ...Colors,
         red: {
-          ...Colors.red,
           kino: "#E50914"
         }
       }
