@@ -13,7 +13,7 @@ interface CarrosselProps{
 
 function BotaoLateral(props:{esquerda?:boolean, direita?:boolean, children:React.ReactNode, onClick: ()=> void, onMouseEnter: ()=>void, onMouseLeave: ()=>void}){
     return (
-        <button type="button" onClick={props.onClick} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave} className={mergeClasses(`group absolute top-0 h-full cursor-pointer flex items-center justify-center px-4 focus:outline-none`, {"left-0":props.esquerda, "right-0":props.direita})}>
+        <button type="button" onClick={props.onClick} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave} className={mergeClasses(`group absolute top-0 lg:h-full h-1/2 cursor-pointer flex items-center justify-center px-4 focus:outline-none`, {"left-0":props.esquerda, "right-0":props.direita})}>
                 <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-700/30 group-focus:outline-none group-focus:ring-4 group-focus:ring-white group-hover:bg-gray-800/60`}>
                     {props.children}
                 </span>
@@ -84,7 +84,7 @@ export default function Carrossel({children,slideAutomatico}:CarrosselProps){
 
     return(
         <Wrap className="relative">
-            <Container className="relative">
+            <Container className="relative w-5/6">
                 <Wrap>
                     <div className="relative rounded-lg mb-5" ref={carrosselRef} onMouseEnter={pararSlide} onMouseLeave={iniciarSlide}>
                         {Children.map(children, (filho:JSX.Element, i)=>{
