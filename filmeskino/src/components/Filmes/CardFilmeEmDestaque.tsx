@@ -7,10 +7,11 @@ import PosterDoFilme from "./PosterDoFilme"
 
 interface CardFilmeEmDestaqueProps{
     filme: Filme,
-    className?: string 
+    className?: string,
+    priority?: boolean
 }
 
-export default function CardFilmeEmDestaque({filme,className}:CardFilmeEmDestaqueProps){
+export default function CardFilmeEmDestaque({filme,className, priority = false}:CardFilmeEmDestaqueProps){
     return(
         <Container className={className}>
             <Flex className="gap-8 flex-col-reverse lg:flex-row">
@@ -21,7 +22,7 @@ export default function CardFilmeEmDestaque({filme,className}:CardFilmeEmDestaqu
                     className={`px-3 py-3 bg-red-kino font-semibold rounded-lg hover:brightness-75`}
                     >Mais Detalhes</Link>
                 </Flex>
-                <PosterDoFilme titulo={filme.titulo} url={filme.linkImagemPoster}/>
+                <PosterDoFilme titulo={filme.titulo} url={filme.linkImagemPoster} priority={priority}/>
             </Flex>
         </Container>
     )
