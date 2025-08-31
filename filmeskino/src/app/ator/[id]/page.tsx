@@ -1,24 +1,24 @@
-'use client'
-import {useParams} from "next/navigation"
 import useMovieAPI from "@/hooks/useMovieAPI"
-import { useState, useEffect } from "react"
 import Wrap from "@/components/template/Wrap"
 import Container from "@/components/template/Container"
+import ImagemPerfil from "@/components/ator/ImagemDePerfil"
+import DetalhesAtor from "@/components/ator/DetalhesAtor"
+import Album from "@/components/ator/Album"
+import OutrosFilmes from "@/components/ator/OutrosFilmes"
 
-export default function Ator(){
-    const [ator, setAtor] = useState<AtorDetalhado | null>(null)
-    const {id} = useParams()
+export default async function Ator(props: any){
+    const id = props.params.id
     const {getAtorDetalhado} = useMovieAPI();
-
-    useEffect(()=>{
-        getAtorDetalhado(String(id)).then(setAtor)
-    },[])
+    const ator = await getAtorDetalhado(String(id))
 
     return(
         <Wrap>
-            <Container className="mt-32 md:mt-44 min-h-96 w-full">
-                <div>{JSON.stringify(ator)}</div>
-            </Container>
+                <Container bidPadding className="mt-32 md:mt-44 min-h-96 w-full">
+                    <ImagemPerfil url={ator?.imagemPerfil} imgAlt={`Imagem de ${ator?.nome}`}/>
+                    <DetalhesAtor ator={ator}/>
+                </Container>
+            <Album idAtor={String(id)}/>
+            <OutrosFilmes idAtor={String(id)}/>
         </Wrap>
     )
 }
