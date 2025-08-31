@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react"
 import Container from "../template/Container"
-import Titulo from "../template/Titulo"
 import ListaDeFilmes from "./ListaDeFilmes"
 import useMovieAPI from "@/hooks/useMovieAPI"
 
@@ -8,13 +6,9 @@ interface SugestoesFilmesProps{
     idFilme: string
 }
 
-export default function SugestoesFilmes({idFilme}:SugestoesFilmesProps){
-    const [filmes, setFilmes] = useState<Filme[]>([])
+export default async function SugestoesFilmes({idFilme}:SugestoesFilmesProps){
     const {getFilmesSimilares} = useMovieAPI()
-
-    useEffect(()=>{
-        getFilmesSimilares(idFilme).then(setFilmes)
-    },[])
+    const filmes = await getFilmesSimilares(idFilme)
 
     return (
         <Container className="my-16 bg-neutral-950 rounded-lg lg:pt-10">
