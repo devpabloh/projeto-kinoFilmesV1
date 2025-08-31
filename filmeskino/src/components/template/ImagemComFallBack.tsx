@@ -10,9 +10,10 @@ interface ImagemComFallBackProps{
     imgAlt: string
     className?: string
     children: React.ReactNode
+    priority?: boolean
 }
 
-export default function ImagemComFallBack({children, imgAlt, url, className}:ImagemComFallBackProps){
+export default function ImagemComFallBack({children, imgAlt, url, className, priority = false}:ImagemComFallBackProps){
     const [imagemPadrao, setImagemPadrao] = useState(false)
 
     useEffect(()=>{
@@ -23,5 +24,5 @@ export default function ImagemComFallBack({children, imgAlt, url, className}:Ima
         return <Flex className="h-full w-full absolute -z-30">{children}</Flex>
     }
 
-    return <Image fill alt={imgAlt} src={url} className={mergeClasses("object-cover", className)} sizes="80vw"/>
+    return <Image fill alt={imgAlt} src={url} className={mergeClasses("object-cover", className)} sizes="80vw" priority={priority}/>
 }
