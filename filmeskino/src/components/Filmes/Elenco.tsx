@@ -51,7 +51,7 @@ export default function Elenco ({elenco}:ElencoProps) {
   return (
     <Container className="pb-0 pt-10">
       <Titulo texto="Elenco" className="mb-4" alinhar="center"/>
-      <Flex className="flex-wrap">
+      <Flex className="flex-wrap mt-14">
         {elenco.map((ator, i) => (
         <Link href={`/ator/${ator.id}`} key={ator.id}>
           <div
