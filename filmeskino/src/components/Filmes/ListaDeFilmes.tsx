@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link"
 import Container from "../template/Container"
 import Grid from "../template/Grid"
