@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Flex from "../template/Flex"
 import useMovieAPI from "@/hooks/useMovieAPI"
 import mergeClasses from "@/utils/mergeClasses"
+import Skeleton from "../template/Skeleton"
 
 interface GenerosProps{
     idFilme: string,
@@ -11,7 +12,7 @@ interface GenerosProps{
 }
 
 export default function Generos({grande, idFilme, generosPadrao}:GenerosProps){
-    const [generos, setGeneros] = useState<Genero[]>([])
+    const [generos, setGeneros] = useState<Genero[] | null>(null)
     const {getGenerosDoFilme} = useMovieAPI()
 
     useEffect(()=>{
@@ -21,6 +22,17 @@ export default function Generos({grande, idFilme, generosPadrao}:GenerosProps){
         }
         getGenerosDoFilme(idFilme).then(setGeneros)
     },[])
+
+    if(!generos){
+        return (
+            <Flex className="flex-wrap justify-start">
+                {Array(4).fill(0).map((_,i)=>{
+                    return <Skeleton key={i} className="rounded-lg h-8 w-16"/>
+                })}
+            </Flex>
+        )
+    }
+
     return(
         <Flex className="flex-wrap justify-start">
             {generos.map((genero)=>{
