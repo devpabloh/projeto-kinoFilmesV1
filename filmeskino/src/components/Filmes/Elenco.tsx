@@ -53,10 +53,9 @@ export default function Elenco ({elenco}:ElencoProps) {
       <Titulo texto="Elenco" className="mb-4" alinhar="center"/>
       <Flex className="flex-wrap">
         {elenco.map((ator, i) => (
-        <Link href={`/ator/${ator.id}`}>
+        <Link href={`/ator/${ator.id}`} key={ator.id}>
           <div
           className="group relative -mr-4"
-          key={ator.id}
           onMouseEnter={() => setIndiceSelecionado(i)}
           onMouseLeave={() => setIndiceSelecionado(null)}
         >
