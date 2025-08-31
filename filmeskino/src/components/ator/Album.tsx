@@ -37,11 +37,11 @@ export default async function Album({idAtor, priority = false}:AlbumProps){
                             <Flex className="justify-between w-full">
                                 {grupo.map((linkImagem, imgIndex) => {
                                     return (
-                                        <Wrap key={linkImagem} className={`h-52 md:h-96 lg:min-h-[600px] relative overflow-hidden rounded-lg`}>
+                                        <Wrap key={linkImagem} className={`h-36 sm:h-52 md:h-96 lg:min-h-[600px] relative overflow-hidden rounded-lg`}>
                                             <Image 
                                                 src={linkImagem}
-                                                alt="Foto do ator"
-                                                className="object-contain"
+                                                alt="Imagem do ator"
+                                                className="object-contain object-cover"
                                                 sizes="40vw"
                                                 fill
                                                 priority={priority && index === 0 && imgIndex === 0} 
